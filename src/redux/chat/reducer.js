@@ -5,51 +5,110 @@ import {
   sendMessageFailure,
   fetchChatsRequest,
   fetchChatsSuccess,
-  fetchChatsFailure
+  fetchChatsFailure,
+  createChatRequest,
+  createChatSuccess,
+  createChatFailure,
+  getMessagesByChatRequest,
+  getMessagesByChatSuccess,
+  getMessagesByChatFailure
 } from './actions';
 
 const initialState = {
-    isSendingMesssage: false,
-    isSendingMesssageSuccess: false,
-    isSendingMesssageFailure: false,
+    isSendingMessage: false,
+    isSendingMessageSuccess: false,
+    isSendingMessageFailure: false,
     message: {},
     isFetchingChats: false,
     chatHistory: [],
+    error: [],
+    isFetchingChatsSuccess: false,
+    isFetchingChatsFailure: false,
+    messages: [],
+    isGettingMessagesByChat: false,
+    isGettingMessagesByChatSuccess: false,
+    isGettingMessagesByChatFailure: false,
 };
 
 const reducer = handleActions(
   {
-    [sendMessageRequest]: (state) => ({
+    [sendMessageRequest]: (state, {payload}) => ({
       ...state,
-      isCreatingChat: true,
-      isSendingMesssageSuccess: false,
-      isSendingMesssageFailure: false,
+      isSendingMessage: true,
+      isSendingMessageSuccess: false,
+      isSendingMessageFailure: false,
+      messages: [...state.messages, {
+        id: Date.now(),
+        sender: 'user',
+        message: payload.message,
+        isTemp: true
+      }]
     }),
     [sendMessageSuccess]: (state, {payload}) => ({
       ...state,
-      isCreatingChat: false,
-      isSendingMesssageSuccess: true,
-      message: payload.data,
+      messages: [...state.messages, payload.message],
+      isSendingMessage: false,
+      isSendingMessageSuccess: true
     }),
     [sendMessageFailure]: (state, {payload}) => ({
       ...state,
-      isCreatingChat: false,
-      isSendingMesssageFailure: true,
-      message: payload,
+      isSendingMessage: false,
+      isSendingMessageFailure: true,
+      error: payload,
     }),
     [fetchChatsRequest]: (state) => ({
       ...state,
       isFetchingChats: true,
+      isFetchingChatsSuccess: false,
+      isFetchingChatsFailure: false,
     }),
     [fetchChatsSuccess]: (state, {payload}) => ({
       ...state,
       isFetchingChats: false,
+      isFetchingChatsSuccess: true,
       chatHistory: payload.chats,
     }),
     [fetchChatsFailure]: (state, {payload}) => ({
       ...state,
       isFetchingChats: false,
-      message: payload,
+      isFetchingChatsFailure: true,
+      error: payload,
+    }),
+    [createChatRequest]: (state) => ({
+      ...state,
+      isCreatingNewChat: true,
+      isCreatingNewChatSuccess: false,
+      isCreatingNewChatFailure: false,
+    }),
+    [createChatSuccess]: (state, {payload}) => ({
+    ...state,
+      isCreatingNewChat: false,
+      isCreatingNewChatSuccess: true,
+      chatHistory: [payload.chat, ...state.chatHistory]
+    }),
+    [createChatFailure]: (state, {payload}) => ({
+      ...state,
+      isCreatingNewChat: false,
+      isCreatingNewChatFailure: true,
+      error: payload,
+    }),
+    [getMessagesByChatRequest]: (state) => ({
+      ...state,
+      isGettingMessagesByChat: true,
+      isGettingMessagesByChatSuccess: false,
+      isGettingMessagesByChatFailure: false,
+    }),
+    [getMessagesByChatSuccess]: (state, {payload}) => ({
+      ...state,
+      isGettingMessagesByChat: false,
+      isGettingMessagesByChatSuccess: true,
+      messages: payload. messages,
+    }),
+    [getMessagesByChatFailure]: (state, {payload}) => ({
+      ...state,
+      isGettingMessagesByChat: false,
+      isGettingMessagesByChatFailure: true,
+      error: payload,
     }),
   },
   initialState

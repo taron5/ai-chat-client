@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { dispatch } from '../redux/store';
 import { fetchChatsRequest } from '../redux/chat/actions';
 import { useSelector } from 'react-redux';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
-  const {chatHistory, isFetchingChats} = useSelector(state => state.chat);
-  const [error, setError] = useState(null);
+  const { chatHistory, isFetchingChats, error } = useSelector(state => state.chat);
 
   useEffect(() => {
-    dispatch(fetchChatsRequest({userId: 1}));
+    dispatch(fetchChatsRequest({ userId: 1 }));
   }, []);
 
   const formatDate = (dateString) => {
@@ -27,7 +24,7 @@ const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
       <div className="p-4">
         <button
           onClick={onNewChat}
-          className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors duration-200"
+          className="cursor-pointer w-full flex items-center justify-center space-x-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg transition-colors duration-200"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
             <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
@@ -45,11 +42,11 @@ const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
               <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-200"></div>
             </div>
           </div>
-        ) : error ? (
+        ) : error?.length ? (
           <div className="text-red-400 text-sm text-center py-4 px-2">
             {error}
           </div>
-        ) : chatHistory.length === 0 ? (
+        ) : !chatHistory.length ? (
           <div className="text-gray-400 text-sm text-center py-4">
             No chat history
           </div>
@@ -59,7 +56,7 @@ const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
               <button
                 key={chat.id}
                 onClick={() => onSelectChat(chat)}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-colors duration-200 ${
+                className={`cursor-pointer w-full text-left px-3 py-2 rounded-lg transition-colors duration-200 ${
                   activeChat?.id === chat.id
                     ? 'bg-[#1C2333] text-white'
                     : 'text-gray-400 hover:bg-[#1C2333] hover:text-white'
@@ -83,4 +80,4 @@ const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

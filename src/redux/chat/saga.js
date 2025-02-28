@@ -4,7 +4,13 @@ import {
     sendMessageFailure,
     fetchChatsRequest,
     fetchChatsSuccess,
-    fetchChatsFailure
+    fetchChatsFailure,
+    createChatRequest,
+    createChatSuccess,
+    createChatFailure,
+    getMessagesByChatSuccess,
+    getMessagesByChatFailure,
+    getMessagesByChatRequest
   } from './actions';
 
   import axiosInstance from '../../utils/axiosInstance';
@@ -16,13 +22,13 @@ import {
       const response = yield call(() =>
         axiosInstance.post(`/chat/message/send`, payload)
       );
-      if (response?.status === 200) {
+      if (response.status === 200) {
         yield put(sendMessageSuccess(response.data));
       }
     } catch (e) {
       console.log(`Catch for sendMessage, error`, e);
-      if (e.response.data) {
-        yield put(sendMessageFailure(e.response.data?.message));
+      if (e.message) {
+        yield put(sendMessageFailure(e.message));
       }
     }
   }
@@ -32,13 +38,46 @@ import {
       const response = yield call(() =>
         axiosInstance.get(`/chat/history/${payload.userId}`)
       );
-      if (response?.status === 200) {
+      if (response.status === 200) {
         yield put(fetchChatsSuccess(response.data));
       }
     } catch (e) {
       console.log(`Catch for fetchChats, error`, e);
-      if (e.response.data) {
-        yield put(fetchChatsFailure(e.response.data?.message));
+      if (e.message) {
+        yield put(fetchChatsFailure(e.emessage));
+      }
+    }
+  }
+
+  function* createChat({ payload }) {
+    try {
+      const response = yield call(() =>
+        axiosInstance.post(`/chat/create`, payload)
+      );
+      
+      if (response.status === 200) {
+        yield put(createChatSuccess(response.data));
+      }
+    } catch (e) {
+      console.log(`Catch for createChat, error`, e);
+      if (e.message) {
+        yield put(createChatFailure(e.emessage));
+      }
+    }
+  }
+
+  function* messagesByChat({ payload }) {
+    try {
+      const response = yield call(() =>
+        axiosInstance.get(`/chat/messages/${payload.chatId}`)
+      );
+      if (response.status === 200) {
+        yield put(getMessagesByChatSuccess(response.data));
+      }
+    } catch (e) {
+      console.log(`Catch for messagesByChat, error`, e);
+      if (e.message) {
+        yield put(getMessagesByChatFailure(e.emessage));
       }
     }
   }
@@ -46,4 +85,7 @@ import {
   export default function* () {
     yield takeLatest(sendMessageRequest, sendMessage);
     yield takeLatest(fetchChatsRequest, fetchChats);
+    yield takeLatest(createChatRequest, createChat);
+    yield takeLatest(getMessagesByChatRequest, messagesByChat);
   }
+  
