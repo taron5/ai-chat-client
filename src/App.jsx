@@ -1,8 +1,12 @@
 import Chat from './components/Chat';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
-    <Chat />
+    <>
+      <Toaster />
+      <Chat />
+    </>
   );
 }
 

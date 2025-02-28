@@ -21,7 +21,7 @@ const initialState = {
     message: {},
     isFetchingChats: false,
     chatHistory: [],
-    error: [],
+    errorMessage: [],
     isFetchingChatsSuccess: false,
     isFetchingChatsFailure: false,
     messages: [],
@@ -54,7 +54,7 @@ const reducer = handleActions(
       ...state,
       isSendingMessage: false,
       isSendingMessageFailure: true,
-      error: payload,
+      errorMessage: payload,
     }),
     [fetchChatsRequest]: (state) => ({
       ...state,
@@ -72,7 +72,7 @@ const reducer = handleActions(
       ...state,
       isFetchingChats: false,
       isFetchingChatsFailure: true,
-      error: payload,
+      errorMessage: payload,
     }),
     [createChatRequest]: (state) => ({
       ...state,
@@ -90,7 +90,7 @@ const reducer = handleActions(
       ...state,
       isCreatingNewChat: false,
       isCreatingNewChatFailure: true,
-      error: payload,
+      errorMessage: payload,
     }),
     [getMessagesByChatRequest]: (state) => ({
       ...state,
@@ -108,7 +108,7 @@ const reducer = handleActions(
       ...state,
       isGettingMessagesByChat: false,
       isGettingMessagesByChatFailure: true,
-      error: payload,
+      errorMessage: payload,
     }),
   },
   initialState

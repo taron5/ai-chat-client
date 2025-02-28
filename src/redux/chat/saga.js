@@ -12,10 +12,11 @@ import {
     getMessagesByChatFailure,
     getMessagesByChatRequest
   } from './actions';
-
-  import axiosInstance from '../../utils/axiosInstance';
+  
   import { call, put, takeLatest } from 'redux-saga/effects';
 
+  import axiosInstance from '../../utils/axiosInstance';
+  import showToast from '../../utils/toast';
   
   function* sendMessage({ payload }) {
     try {
@@ -28,6 +29,7 @@ import {
     } catch (e) {
       console.log(`Catch for sendMessage, error`, e);
       if (e.message) {
+        showToast(e.message);
         yield put(sendMessageFailure(e.message));
       }
     }
@@ -44,6 +46,7 @@ import {
     } catch (e) {
       console.log(`Catch for fetchChats, error`, e);
       if (e.message) {
+        showToast(e.message);
         yield put(fetchChatsFailure(e.emessage));
       }
     }
@@ -61,6 +64,7 @@ import {
     } catch (e) {
       console.log(`Catch for createChat, error`, e);
       if (e.message) {
+        showToast(e.message);
         yield put(createChatFailure(e.emessage));
       }
     }
@@ -77,6 +81,7 @@ import {
     } catch (e) {
       console.log(`Catch for messagesByChat, error`, e);
       if (e.message) {
+        showToast(e.message);
         yield put(getMessagesByChatFailure(e.emessage));
       }
     }
@@ -88,4 +93,3 @@ import {
     yield takeLatest(createChatRequest, createChat);
     yield takeLatest(getMessagesByChatRequest, messagesByChat);
   }
-  

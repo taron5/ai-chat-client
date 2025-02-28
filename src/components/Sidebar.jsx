@@ -4,7 +4,7 @@ import { fetchChatsRequest } from '../redux/chat/actions';
 import { useSelector } from 'react-redux';
 
 const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
-  const { chatHistory, isFetchingChats, error } = useSelector(state => state.chat);
+  const { chatHistory, isFetchingChats } = useSelector(state => state.chat);
 
   useEffect(() => {
     dispatch(fetchChatsRequest({ userId: 1 }));
@@ -41,10 +41,6 @@ const Sidebar = ({ onNewChat, activeChat, onSelectChat }) => {
               <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-100"></div>
               <div className="w-2 h-2 bg-indigo-400 rounded-full animate-bounce delay-200"></div>
             </div>
-          </div>
-        ) : error?.length ? (
-          <div className="text-red-400 text-sm text-center py-4 px-2">
-            {error}
           </div>
         ) : !chatHistory.length ? (
           <div className="text-gray-400 text-sm text-center py-4">
