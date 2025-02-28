@@ -1,12 +1,59 @@
-# React + Vite
+# AI Chat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern chat application built with React and Vite that provides an interactive AI chat experience.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Real-time chat interface
+- Chat history management
+- Modern and responsive UI
+- Auto-expanding text area
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js (v16 or higher)
+- npm (v7 or higher)
+
+## Getting Started
+
+Follow these steps to set up and run the project locally:
+
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Set up environment variables:
+```bash
+cp .env.example .env
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## Environment Variables
+
+Make sure your `.env` file contains the following variables:
+
+```
+VITE_API_URL=http://localhost:5000/api
+```
+
+## Available Scripts
+
+- `npm run dev` - Start the development server
+- `npm run build` - Build the application for production
+- `npm run preview` - Preview the production build locally
+- `npm run lint` - Run ESLint to check code quality
+
+## Tech Stack
+
+- React
+- Vite
+- Redux + Redux Saga
+- Tailwind CSS
+- Axios
