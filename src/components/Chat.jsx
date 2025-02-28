@@ -129,37 +129,36 @@ const Chat = () => {
           </h1>
         </div>
 
-        {showNewChatDialog && (
-          <div className="p-6">
-            <form onSubmit={handleCreateNewChat} className="space-y-4">
-              <input
-                type="text"
-                value={newChatName}
-                onChange={(e) => setNewChatName(e.target.value)}
-                placeholder="Enter chat name..."
-                className="w-full bg-[#1C2333] text-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-500"
-                autoFocus
-              />
-              <div className="flex space-x-3">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                >
-                  Create Chat
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowNewChatDialog(false)}
-                  className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
         <div className="px-80 flex-1 flex flex-col">
+          {showNewChatDialog && (
+            <div className="p-6">
+              <form onSubmit={handleCreateNewChat} className="space-y-4">
+                <input
+                  type="text"
+                  value={newChatName}
+                  onChange={(e) => setNewChatName(e.target.value)}
+                  placeholder="Enter chat name..."
+                  className="w-full bg-[#1C2333] text-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder-gray-500"
+                  autoFocus
+                />
+                <div className="flex space-x-3">
+                  <button
+                    type="submit"
+                    className="cursor-pointer px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    Create Chat
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setShowNewChatDialog(false)}
+                    className="cursor-pointer px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {messages
               .map((message, index) => (
